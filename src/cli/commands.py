@@ -63,3 +63,12 @@ def list_tasks_cli(task_service: TaskService):
     except ValueError as e:
         print(f"Error: {e}")
 
+def change_status_cli(task_service: TaskService):
+    pid = input("Project ID: ")
+    tid = input("Task ID: ")
+    status = input("New status (todo/doing/done): ")
+    try:
+        task_service.change_status(pid, tid, status)
+        print("Status changed.")
+    except ValueError as e:
+        print(f"Error: {e}")

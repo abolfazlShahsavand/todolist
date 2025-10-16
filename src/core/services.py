@@ -52,3 +52,14 @@ class TaskService:
         if not tasks:
             raise ValueError("No tasks or project not found")
         return sorted(tasks, key=lambda t: t.created_at)
+    
+    def change_status(self, project_id: str, task_id: str, new_status: str):
+        try:
+            status = TaskStatus(new_status)
+        except ValueError:
+            raise ValueError("Invalid status")
+        task = self.storage.get_task(project_id, task_id)
+        if not task:
+            raise ValueError("Task not found")
+        task.status = status
+        self.storage.update_task(project_id, task)
