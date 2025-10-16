@@ -29,14 +29,17 @@ class InMemoryStorage:
     def update_project(self, project: Project) -> None:
         if project.id not in self.projects:
             raise ValueError("Project not found")
-        if any(p.name == project.name and p.id != project.id for p in self.projects.values()):
+        if any(
+            p.name == project.name and p.id != project.id
+            for p in self.projects.values()
+        ):
             raise ValueError("Project name must be unique")
         self.projects[project.id] = project
 
     def delete_project(self, project_id: str) -> None:
         if project_id not in self.projects:
             raise ValueError("Project not found")
-        del self.projects[project_id]  # Cascade: tasks are in project, so auto-deleted
+        del self.projects[project_id]
 
     def add_task(self, project_id: str, task: Task) -> None:
         project = self.get_project(project_id)
@@ -68,5 +71,3 @@ class InMemoryStorage:
         if not task:
             raise ValueError("Task not found")
         tasks.remove(task)
-    
-    

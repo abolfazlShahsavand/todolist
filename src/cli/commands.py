@@ -1,5 +1,4 @@
-from src.core.services import ProjectService,  TaskService
-from src.storage.in_memory import InMemoryStorage
+from src.core.services import ProjectService, TaskService
 
 
 def create_project_cli(service: ProjectService):
@@ -10,7 +9,8 @@ def create_project_cli(service: ProjectService):
         print(f"Project created: {project.id}")
     except ValueError as e:
         print(f"Error: {e}")
-    
+
+
 def list_projects_cli(service: ProjectService):
     projects = service.list_projects()
     if not projects:
@@ -18,7 +18,8 @@ def list_projects_cli(service: ProjectService):
         return
     for p in projects:
         print(f"ID: {p.id}, Name: {p.name}, Desc: {p.description}")
-    
+
+
 def edit_project_cli(service: ProjectService):
     pid = input("Enter project ID: ")
     name = input("New name: ")
@@ -28,6 +29,7 @@ def edit_project_cli(service: ProjectService):
         print("Project edited.")
     except ValueError as e:
         print(f"Error: {e}")
+
 
 def delete_project_cli(service: ProjectService):
     pid = input("Enter project ID to delete: ")
@@ -41,6 +43,7 @@ def delete_project_cli(service: ProjectService):
     else:
         print("Deletion cancelled.")
 
+
 def add_task_cli(task_service: TaskService):
     pid = input("Project ID: ")
     title = input("Title: ")
@@ -53,15 +56,20 @@ def add_task_cli(task_service: TaskService):
     except ValueError as e:
         print(f"Error: {e}")
 
+
 def list_tasks_cli(task_service: TaskService):
     pid = input("Project ID: ")
     try:
         tasks = task_service.list_tasks(pid)
         for t in tasks:
             dl = t.deadline.isoformat() if t.deadline else "None"
-            print(f"ID: {t.id}, Title: {t.title}, Status: {t.status.value}, Deadline: {dl}")
+            print(
+                f"ID: {t.id}, Title: {t.title}, Status: {t.status.value}, \
+                    Deadline: {dl}"
+            )
     except ValueError as e:
         print(f"Error: {e}")
+
 
 def change_status_cli(task_service: TaskService):
     pid = input("Project ID: ")
@@ -72,6 +80,8 @@ def change_status_cli(task_service: TaskService):
         print("Status changed.")
     except ValueError as e:
         print(f"Error: {e}")
+
+
 def edit_task_cli(task_service: TaskService):
     pid = input("Project ID: ")
     tid = input("Task ID: ")
@@ -84,6 +94,7 @@ def edit_task_cli(task_service: TaskService):
         print("Task edited.")
     except ValueError as e:
         print(f"Error: {e}")
+
 
 def delete_task_cli(task_service: TaskService):
     pid = input("Project ID: ")
