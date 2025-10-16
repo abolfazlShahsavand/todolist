@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     while True:
         print("\n1. Create Project\n2. List Projects\n3. Edit Project\n4. Delete Projects\n5. Add Task\n6. List Task\n7. Change status Task\n8. Edit Task\n0. Exit")
-        choice = input("Enter your choice (0-5): ")
+        choice = input("Enter your choice (0-9): ")
 
         if choice == "1":
             create_project_cli(service)
