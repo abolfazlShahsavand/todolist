@@ -18,3 +18,13 @@ def list_projects_cli(service: ProjectService):
         return
     for p in projects:
         print(f"ID: {p.id}, Name: {p.name}, Desc: {p.description}")
+    
+def edit_project_cli(service: ProjectService):
+    pid = input("Enter project ID: ")
+    name = input("New name: ")
+    desc = input("New desc: ")
+    try:
+        service.edit_project(pid, name, desc)
+        print("Project edited.")
+    except ValueError as e:
+        print(f"Error: {e}")
