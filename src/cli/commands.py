@@ -28,3 +28,15 @@ def edit_project_cli(service: ProjectService):
         print("Project edited.")
     except ValueError as e:
         print(f"Error: {e}")
+
+def delete_project_cli(service: ProjectService):
+    pid = input("Enter project ID to delete: ")
+    confirm = input("Confirm (y/n): ")
+    if confirm.lower() == "y":
+        try:
+            service.delete_project(pid)
+            print("Project deleted.")
+        except ValueError as e:
+            print(f"Error: {e}")
+    else:
+        print("Deletion cancelled.")

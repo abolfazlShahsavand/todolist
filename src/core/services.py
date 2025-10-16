@@ -25,3 +25,6 @@ class ProjectService:
         if len(project.description.split()) > 150:
             raise ValueError("Description must be <= 150 words")
         self.storage.update_project(project)
+    
+    def delete_project(self, project_id: str):
+        self.storage.delete_project(project_id)
