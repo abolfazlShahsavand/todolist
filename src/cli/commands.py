@@ -84,3 +84,14 @@ def edit_task_cli(task_service: TaskService):
         print("Task edited.")
     except ValueError as e:
         print(f"Error: {e}")
+
+def delete_task_cli(task_service: TaskService):
+    pid = input("Project ID: ")
+    tid = input("Task ID to delete: ")
+    confirm = input("Confirm (y/n): ")
+    if confirm.lower() == "y":
+        try:
+            task_service.delete_task(pid, tid)
+            print("Task deleted.")
+        except ValueError as e:
+            print(f"Error: {e}")

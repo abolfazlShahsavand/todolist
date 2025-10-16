@@ -1,5 +1,5 @@
 import sys
-from src.cli.commands import create_project_cli, list_projects_cli, edit_project_cli, delete_project_cli, add_task_cli,list_tasks_cli, change_status_cli,edit_task_cli
+from src.cli.commands import create_project_cli, list_projects_cli, edit_project_cli, delete_project_cli, add_task_cli,list_tasks_cli, change_status_cli,edit_task_cli,delete_task_cli
 from src.storage.in_memory import InMemoryStorage
 from src.core.services import ProjectService, TaskService
 
@@ -29,6 +29,8 @@ if __name__ == "__main__":
             change_status_cli(task_service)
         elif choice == "8":
             edit_task_cli(task_service)
+        elif choice == "9":
+            delete_task_cli(task_service)
         elif choice == "0":
             print("Exiting...")
             sys.exit(0)

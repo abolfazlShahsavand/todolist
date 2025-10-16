@@ -74,3 +74,6 @@ class TaskService:
         task.deadline = datetime.fromisoformat(new_deadline) if new_deadline else None
         Task.__post_init__(task)  # Re-validate
         self.storage.update_task(project_id, task)
+    
+    def delete_task(self, project_id: str, task_id: str):
+        self.storage.delete_task(project_id, task_id)
