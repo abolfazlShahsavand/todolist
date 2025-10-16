@@ -52,3 +52,14 @@ def add_task_cli(task_service: TaskService):
         print(f"Task added: {task.id}")
     except ValueError as e:
         print(f"Error: {e}")
+
+def list_tasks_cli(task_service: TaskService):
+    pid = input("Project ID: ")
+    try:
+        tasks = task_service.list_tasks(pid)
+        for t in tasks:
+            dl = t.deadline.isoformat() if t.deadline else "None"
+            print(f"ID: {t.id}, Title: {t.title}, Status: {t.status.value}, Deadline: {dl}")
+    except ValueError as e:
+        print(f"Error: {e}")
+

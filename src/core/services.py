@@ -47,3 +47,8 @@ class TaskService:
         task = Task(title=title, description=description, status=task_status, deadline=dl)
         self.storage.add_task(project_id, task)
         return task
+    def list_tasks(self, project_id: str):
+        tasks = self.storage.get_tasks(project_id)
+        if not tasks:
+            raise ValueError("No tasks or project not found")
+        return sorted(tasks, key=lambda t: t.created_at)
