@@ -3,12 +3,12 @@
 A task management (ToDoList) project using Python OOP with in-memory storage in Phase 1.
 
 ## Project Status
-- Initial setup in progress
+- Poetry project initialized
 - Start Date: October 16, 2025
-- Deadline: October 25, 2025 
+- Deadline: October 25, 2025 (per documentation)
 
 ## Installation and Running
-- Installation instructions will be added later.
+- Install: `pip install poetry` and then `poetry install`
 - Running instructions will be added later.
 
 ## Features
