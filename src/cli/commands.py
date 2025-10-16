@@ -10,3 +10,11 @@ def create_project_cli(service: ProjectService):
         print(f"Project created: {project.id}")
     except ValueError as e:
         print(f"Error: {e}")
+    
+def list_projects_cli(service: ProjectService):
+    projects = service.list_projects()
+    if not projects:
+        print("No projects exist.")
+        return
+    for p in projects:
+        print(f"ID: {p.id}, Name: {p.name}, Desc: {p.description}")

@@ -10,3 +10,6 @@ class ProjectService:
         project = Project(name=name, description=description)
         self.storage.add_project(project)
         return project
+    
+    def list_projects(self):
+        return self.storage.get_all_projects()
