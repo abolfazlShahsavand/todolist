@@ -63,3 +63,14 @@ class TaskService:
             raise ValueError("Task not found")
         task.status = status
         self.storage.update_task(project_id, task)
+    
+    def edit_task(self, project_id: str, task_id: str, new_title: str, new_desc: str, new_deadline: Optional[str], new_status: str):
+        task = self.storage.get_task(project_id, task_id)
+        if not task:
+            raise ValueError("Task not found")
+        task.title = new_title
+        task.description = new_desc
+        task.status = TaskStatus(new_status)
+        task.deadline = datetime.fromisoformat(new_deadline) if new_deadline else None
+        Task.__post_init__(task)  # Re-validate
+        self.storage.update_task(project_id, task)
