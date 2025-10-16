@@ -28,3 +28,22 @@ class ProjectService:
     
     def delete_project(self, project_id: str):
         self.storage.delete_project(project_id)
+
+
+from src.core.models import Task, TaskStatus
+from datetime import datetime
+from typing import Optional
+
+class TaskService:
+    def __init__(self, storage: InMemoryStorage):
+        self.storage = storage
+
+    def add_task(self, project_id: str, title: str, description: str, status: str = "todo", deadline: Optional[str] = None):
+        try:
+            task_status = TaskStatus(status)
+        except ValueError:
+            raise ValueError("Invalid status")
+        dl = datetime.fromisoformat(deadline) if deadline else None
+        task = Task(title=title, description=description, status=task_status, deadline=dl)
+        self.storage.add_task(project_id, task)
+        return task

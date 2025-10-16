@@ -1,16 +1,17 @@
 import sys
-from src.cli.commands import create_project_cli, list_projects_cli, edit_project_cli, delete_project_cli
+from src.cli.commands import create_project_cli, list_projects_cli, edit_project_cli, delete_project_cli, add_task_cli
 from src.storage.in_memory import InMemoryStorage
-from src.core.services import ProjectService
+from src.core.services import ProjectService, TaskService
 
 if __name__ == "__main__":
     print("ToDoList CLI - Starting up...")
     storage = InMemoryStorage()
     service = ProjectService(storage)
+    task_service = TaskService(storage)
 
     while True:
-        print("\n1. Create Project\n2. List Projects\n3. Edit Project\n4. Delete Projects\n0. Exit")
-        choice = input("Enter your choice (0-4): ")
+        print("\n1. Create Project\n2. List Projects\n3. Edit Project\n4. Delete Projects\n5. Add Task\n0. Exit")
+        choice = input("Enter your choice (0-5): ")
 
         if choice == "1":
             create_project_cli(service)
@@ -20,6 +21,8 @@ if __name__ == "__main__":
             edit_project_cli(service)
         elif choice == "4":
             delete_project_cli(service)
+        elif choice == "5":
+            add_task_cli(task_service) 
         elif choice == "0":
             print("Exiting...")
             sys.exit(0)
