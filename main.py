@@ -10,15 +10,16 @@ from src.cli.commands import (
     edit_task_cli,
     delete_task_cli,
 )
-from src.storage.in_memory import InMemoryStorage
+from src.storage.repositories import ProjectRepository, TaskRepository
+
 from src.core.services import ProjectService, TaskService
 
 if __name__ == "__main__":
     print("ToDoList CLI - Starting up...")
-    storage = InMemoryStorage()
-    service = ProjectService(storage)
-    task_service = TaskService(storage)
-
+    project_repo = ProjectRepository()
+    task_repo = TaskRepository()
+    service = ProjectService(project_repo)
+    task_service = TaskService(task_repo)
     while True:
         print(
             "\n1. Create Project\n2. List Projects\n3. Edit Project\n"
