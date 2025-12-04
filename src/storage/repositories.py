@@ -2,7 +2,8 @@ from typing import List, Optional
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from src.storage import DATABASE_URL
-from src.core.models import Project, Task, TaskStatus
+from src.core.models import Project, Task
+from src.core.models import TaskStatus  # noqa: F401
 import os
 from dotenv import load_dotenv
 
@@ -11,7 +12,10 @@ MAX_PROJECTS = int(os.getenv("MAX_NUMBER_OF_PROJECT", 10))
 MAX_TASKS = int(os.getenv("MAX_NUMBER_OF_TASK", 50))
 
 engine = create_engine(DATABASE_URL)
-SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+SessionLocal = scoped_session(
+    sessionmaker(autocommit=False, autoflush=False, bind=engine)
+)
+
 
 class ProjectRepository:
     def add_project(self, project: Project) -> None:
@@ -37,7 +41,11 @@ class ProjectRepository:
             existing = session.query(Project).filter_by(id=project.id).first()
             if not existing:
                 raise ValueError("Project not found")
-            if session.query(Project).filter(Project.name == project.name, Project.id != project.id).first():
+            if (
+                session.query(Project)
+                .filter(Project.name == project.name, Project.id != project.id)
+                .first()
+            ):
                 raise ValueError("Project name must be unique")
             existing.name = project.name
             existing.description = project.description
@@ -50,6 +58,7 @@ class ProjectRepository:
                 raise ValueError("Project not found")
             session.delete(project)
             session.commit()  # Cascade deletes tasks
+
 
 class TaskRepository:
     def add_task(self, project_id: str, task: Task) -> None:
@@ -66,11 +75,20 @@ class TaskRepository:
 
     def get_tasks(self, project_id: str) -> List[Task]:
         with SessionLocal() as session:
-            return session.query(Task).filter_by(project_id=project_id).order_by(Task.created_at).all()
+            return (
+                session.query(Task)
+                .filter_by(project_id=project_id)
+                .order_by(Task.created_at)
+                .all()
+            )
 
     def get_task(self, project_id: str, task_id: str) -> Optional[Task]:
         with SessionLocal() as session:
-            return session.query(Task).filter_by(id=task_id, project_id=project_id).first()
+            return (
+                session.query(Task).filter_by(
+                    id=task_id, project_id=project_id
+                    ).first()
+            )
 
     def update_task(self, task: Task) -> None:
         with SessionLocal() as session:
@@ -85,7 +103,11 @@ class TaskRepository:
 
     def delete_task(self, project_id: str, task_id: str) -> None:
         with SessionLocal() as session:
-            task = session.query(Task).filter_by(id=task_id, project_id=project_id).first()
+            task = (
+                session.query(Task).filter_by(
+                    id=task_id, project_id=project_id
+                    ).first()
+            )
             if not task:
                 raise ValueError("Task not found")
             session.delete(task)

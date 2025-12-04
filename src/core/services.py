@@ -9,6 +9,7 @@ from src.storage.repositories import SessionLocal
 #      PROJECT SERVICE
 # ===========================
 
+
 class ProjectService:
     def __init__(self, repo: ProjectRepository):
         self.repo = repo
@@ -44,6 +45,7 @@ class ProjectService:
 # ===========================
 #        TASK SERVICE
 # ===========================
+
 
 class TaskService:
     def __init__(self, repo: TaskRepository):
@@ -131,7 +133,7 @@ class TaskService:
             except (ValueError, IndexError):
                 raise ValueError(
                     "Invalid deadline format. Use ISO format (YYYY-MM-DD)"
-                )
+                    )
 
         # Title & description validation
         if len(new_title.split()) > 30:
@@ -153,8 +155,15 @@ class TaskService:
 
     def close_overdue_tasks(self):
         with SessionLocal() as session:  # Assume imported
-            overdue = session.query(Task).filter(Task.deadline < datetime.now(), Task.status != TaskStatus.DONE).all()
+            overdue = (
+                session.query(Task)
+                .filter(
+                    Task.deadline < datetime.now(),
+                    Task.status != TaskStatus.DONE
+                    )
+                .all()
+            )
             for task in overdue:
                 task.status = TaskStatus.DONE
             session.commit()
-            return len(overdue)     
+            return len(overdue)
