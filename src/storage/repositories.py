@@ -22,6 +22,7 @@ class ProjectRepository:
                 raise ValueError("Project name must be unique")
             session.add(project)
             session.commit()
+            session.refresh(project)
 
     def get_project(self, project_id: str) -> Optional[Project]:
         with SessionLocal() as session:
@@ -61,6 +62,7 @@ class TaskRepository:
             task.project_id = project_id
             session.add(task)
             session.commit()
+            session.refresh(task)
 
     def get_tasks(self, project_id: str) -> List[Task]:
         with SessionLocal() as session:
