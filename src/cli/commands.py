@@ -106,3 +106,7 @@ def delete_task_cli(task_service: TaskService):
             print("Task deleted.")
         except ValueError as e:
             print(f"Error: {e}")
+            
+def auto_close_cli(task_service: TaskService):
+    count = task_service.close_overdue_tasks()
+    print(f"Closed {count} overdue tasks.")

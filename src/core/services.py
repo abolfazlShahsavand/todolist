@@ -3,7 +3,7 @@ from typing import Optional
 
 from src.storage.repositories import ProjectRepository, TaskRepository
 from src.core.models import Project, Task, TaskStatus
-
+from src.storage.repositories import SessionLocal
 
 # ===========================
 #      PROJECT SERVICE
@@ -106,7 +106,7 @@ class TaskService:
         if not task:
             raise ValueError("Task not found")
 
-        # Status validation
+        # Status validatiomust be in n
         try:
             status = TaskStatus(new_status)
         except ValueError:
@@ -148,3 +148,13 @@ class TaskService:
 
     def delete_task(self, project_id: str, task_id: str):
         self.repo.delete_task(project_id, task_id)
+
+    from datetime import datetime
+
+    def close_overdue_tasks(self):
+        with SessionLocal() as session:  # Assume imported
+            overdue = session.query(Task).filter(Task.deadline < datetime.now(), Task.status != TaskStatus.DONE).all()
+            for task in overdue:
+                task.status = TaskStatus.DONE
+            session.commit()
+            return len(overdue)     
