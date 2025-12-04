@@ -27,3 +27,6 @@ dev = [
     "black (>=25.9.0,<26.0.0)",
     "flake8 (>=7.3.0,<8.0.0)"
 ]
+
+[tool.poetry.scripts]
+scheduler = "src.scheduler:run_scheduler"

@@ -55,5 +55,5 @@ class Task(Base):
             raise ValueError("Title must be <= 30 words")
         if len(description.split()) > 150:
             raise ValueError("Description must be <= 150 words")
-        if deadline and deadline < datetime.now():
-            raise ValueError("Deadline must be in the future")
+        #if deadline and deadline < datetime.now():
+        #    raise ValueError("Deadline must be in the future")
