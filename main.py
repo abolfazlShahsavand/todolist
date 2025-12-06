@@ -24,7 +24,7 @@ if __name__ == "__main__":
         print(
             "\n1. Create Project\n2. List Projects\n3. Edit Project\n"
             "4. Delete Projects\n5. Add Task\n6. List Task\n"
-            "7. Change status Task\n8. Edit Task\n0. Exit"
+            "7. Change status Task\n8. Edit Task\n9. Delete Task\n0. Exit"
         )
         choice = input("Enter your choice (0-9): ")
 

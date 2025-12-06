@@ -149,6 +149,9 @@ class TaskService:
         self.repo.update_task(task)
 
     def delete_task(self, project_id: str, task_id: str):
+        task = self.repo.get_task(project_id, task_id)
+        if not task:
+            raise ValueError("Task not found")
         self.repo.delete_task(project_id, task_id)
 
     from datetime import datetime
@@ -167,3 +170,4 @@ class TaskService:
                 task.status = TaskStatus.DONE
             session.commit()
             return len(overdue)
+    
